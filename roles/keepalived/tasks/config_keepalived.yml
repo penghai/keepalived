@@ -1,0 +1,10 @@
+- name: Create script and config directories
+  file: 
+    path: /etc/keepalived/{{item}}
+    state: directory
+    mode: '0755'
+   with_items:
+     - config
+     - script
+
+
