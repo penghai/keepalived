@@ -1,2 +1,14 @@
 ---
 # handlers file for roles/keepalived
+
+- name: systemctl daemon-reload
+  shell: systemctl daemon-reload
+
+- name: restart keepalived
+  service:
+    name: "{{item}}"
+    state: restarted
+    enabled: yes
+  with_items:
+    - keepalived_init
+    - keepalived_haproxy

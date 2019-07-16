@@ -1,0 +1,14 @@
+[Unit]
+Description=Haproxy High Availability Monitor
+After=syslog.target network-online.target keepalived_init.service
+
+[Service]
+Type=forking
+PIDFile=/var/run/keepalived_haproxy.pid
+KillMode=process
+EnvironmentFile=-/etc/sysconfig/keepalived_haproxy
+ExecStart=/usr/sbin/keepalived $KEEPALIVED_OPTIONS
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

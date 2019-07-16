@@ -3,8 +3,35 @@
     path: /etc/keepalived/{{item}}
     state: directory
     mode: '0755'
-   with_items:
-     - config
-     - script
+  with_items:
+    - config
+    - script
 
+- name: copy system files
+  copy:
+    src: system/{{item}}
+    dest: /usr/lib/systemd/system/{{item}}
+  with_items:
+    - keepalived_init.service
+    - keepalived_haproxy.service
+  notify: systemctl daemon-reload
 
+- name: copy /etc/sysconfig/keepalived_haproxy files
+  copy:
+    src: keepalived_haproxy
+    dest: /etc/sysconfig/keepalived_haproxy
+
+- name: copy script files
+  copy:
+    src: script/{{item}}
+    dest: /etc/keepalived/script/{{item}}
+    mode: '0755' 
+  with_items:
+    - check_network_ready.sh
+    - check_keepalived_haproxy.sh
+
+- name: write keepalived.conf
+  template:
+    src: config/keepalived_haproxy.conf
+    dest: /etc/keepalived/config/keepalived_haproxy.conf
+  notify: restart keepalived

@@ -1,0 +1,12 @@
+[Unit]
+Description=Wait for network ready
+After=syslog.target network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/etc/keepalived/script/check_network_ready.sh
+TimeoutStartSec=60s
+
+[Install]
+WantedBy=multi-user.target

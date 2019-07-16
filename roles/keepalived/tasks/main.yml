@@ -2,3 +2,6 @@
 # tasks file for roles/keepalived
 
 - include: install.yml
+
+- include: config_keepalived.yml
+

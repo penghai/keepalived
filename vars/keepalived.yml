@@ -1,0 +1,4 @@
+
+keepalived_interface: ens32
+keepalived_router_id: 150
+keepalived_haproxy_vip: 172.16.1.10
